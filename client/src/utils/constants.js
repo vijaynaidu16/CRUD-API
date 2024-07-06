@@ -1,1 +1,1 @@
-export const BASE_URL = `http://localhost:6969`
+export const BASE_URL = `https://crud-api-sigma-seven.vercel.app/`
