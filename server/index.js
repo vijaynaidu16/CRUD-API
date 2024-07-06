@@ -50,20 +50,23 @@ app.get("/display", async (req, res) => {
 
 app.put("/update/:id", async (req, res) => {
   const id = req.params.id;
-  const newfoodName = req.body.newfoodName;
+  const newFoodName = req.body.newFoodName; // Correct variable naming
 
   try {
-    const update = await Food.findById(id);
-    if (!update) {
-      res.status(404).send("Food ID not found");
+    const foodToUpdate = await Food.findById(id);
+    if (!foodToUpdate) {
+      return res.status(404).send({ msg: "Food ID not found" }); // Return after sending response
     }
-    update.foodName = newfoodName;
-    await update.save();
-    res.status(200).send({ msg: "updated", newfoodName });
+    foodToUpdate.foodName = newFoodName;
+    await foodToUpdate.save();
+    res.status(200).send({ msg: "Updated", newFoodName });
   } catch (error) {
-    res.status(404).json({ msg: "Not updated" });
+    console.log("Update error:", error); // More detailed logging
+    res.status(500).json({ msg: "Not updated", error: error.message }); // Correct status code
   }
 });
+
+
 
 // Delete the data - DELETE
 
