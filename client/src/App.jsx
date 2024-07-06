@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from "./utils/constants";
 
 const App = () => {
   const [foodName, setFoodName] = useState("");
@@ -10,7 +11,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:6969/display");
+        const response = await axios.get(BASE_URL+`/display`);
         const data = response.data;
         setList(data);
         console.log(data);
@@ -23,7 +24,7 @@ const App = () => {
 
   const Add = async () => {
     try {
-      await axios.post("http://localhost:6969/", {
+      await axios.post(BASE_URL, {
         foodName,
         daysSinceEaten,
       });
@@ -38,7 +39,7 @@ const App = () => {
 
   const Delete = async (id) => {
     try {
-      await axios.delete(`http://localhost:6969/delete/${id}`);
+      await axios.delete(BASE_URL + `/delete/${id}`);
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -48,7 +49,7 @@ const App = () => {
 
   const Update = async (id) => {
     try {
-      await axios.put(`http://localhost:6969/update/${id}`, {
+      await axios.put(BASE_URL +`/update/${id}`, {
         id: id,
         newFoodName: newFoodName
       });
